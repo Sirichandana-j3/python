@@ -1,0 +1,4 @@
+class Solution:
+    def strStr(self, haystack, needle):
+        # Use Python's built-in `find()` method to return the first index of `needle` in `haystack`
+        return haystack.find(needle)
