@@ -1,0 +1,16 @@
+class Solution:
+    def removeDuplicates(self, nums):
+        if not nums:
+            return 0
+
+        # Pointer `i` for the position of unique elements
+        i = 0
+
+        # Start from the second element
+        for j in range(1, len(nums)):
+            if nums[j] != nums[i]:  # Found a new unique element
+                i += 1  # Move `i` to the next position
+                nums[i] = nums[j]  # Update `nums[i]` to `nums[j]`
+
+        # The number of unique elements is `i + 1`
+        return i + 1
