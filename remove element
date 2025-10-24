@@ -1,0 +1,12 @@
+class Solution:
+    def removeElement(self, nums, val):
+        i = 0  # Pointer for the position of non-val elements
+        
+        # Traverse the array with pointer `j`
+        for j in range(len(nums)):
+            if nums[j] != val:
+                nums[i] = nums[j]  # Move non-val element to the `i`-th position
+                i += 1  # Increment the position for the next non-val element
+        
+        # `i` is the count of non-val elements
+        return i
