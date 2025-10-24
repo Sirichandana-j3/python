@@ -1,0 +1,69 @@
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        # Helper function to reverse the first k nodes of the list
+        def reverse_linked_list(head, k):
+            prev, curr = None, head
+            while k:
+                next_node = curr.next
+                curr.next = prev
+                prev = curr
+                curr = next_node
+                k -= 1
+            return prev
+
+        # Dummy node to handle edge cases
+        dummy = ListNode(0)
+        dummy.next = head
+        group_prev = dummy
+
+        while True:
+            kth_node = group_prev
+            # Find the k-th node
+            for _ in range(k):
+                kth_node = kth_node.next
+                if not kth_node:
+                    return dummy.next  # If there are fewer than k nodes, return the list as is
+
+            group_next = kth_node.next  # The node after the kth node
+            kth_node.next = None  # Disconnect the k-th node from the rest of the list
+
+            # Reverse the group of k nodes
+            group_start = group_prev.next
+            group_prev.next = reverse_linked_list(group_start, k)
+
+            # Reconnect the reversed part with the rest of the list
+            group_start.next = group_next
+            group_prev = group_start  # Move group_prev to the end of the reversed group
+
+        return dummy.next
+
+# Helper function to convert a list of values into a linked list
+def create_linked_list(lst):
+    dummy = ListNode()
+    current = dummy
+    for val in lst:
+        current.next = ListNode(val)
+        current = current.next
+    return dummy.next
+
+# Helper function to print the linked list as a Python list
+def print_linked_list(head):
+    result = []
+    while head:
+        result.append(head.val)
+        head = head.next
+    return result
+
+# Example usage
+sol = Solution()
+head = create_linked_list([1, 2, 3, 4, 5])
+k = 3
+reversed_head = sol.reverseKGroup(head, k)
+print(print_linked_list(reversed_head))  # Expected Output: [3, 2, 1, 4, 5]
+
+        
