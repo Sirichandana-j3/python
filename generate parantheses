@@ -1,0 +1,21 @@
+class Solution:
+    def generateParenthesis(self, n):
+        result = []
+        
+        def backtrack(current, open_count, close_count):
+            # Base case: if current string length is 2 * n, it's a valid combination
+            if len(current) == 2 * n:
+                result.append(current)
+                return
+            
+            # If we can still add an opening parenthesis, do it
+            if open_count < n:
+                backtrack(current + '(', open_count + 1, close_count)
+            
+            # If we can still add a closing parenthesis, do it
+            if close_count < open_count:
+                backtrack(current + ')', open_count, close_count + 1)
+        
+        # Start backtracking with an empty string and zero open/close counts
+        backtrack("", 0, 0)
+        return result
